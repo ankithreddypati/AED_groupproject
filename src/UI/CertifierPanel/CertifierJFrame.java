@@ -4,6 +4,9 @@
  */
 package UI.CertifierPanel;
 
+import Business.Business;
+import UserAccount.UserAccount;
+
 /**
  *
  * @author sruthisivasankar
@@ -15,6 +18,10 @@ public class CertifierJFrame extends javax.swing.JFrame {
      */
     public CertifierJFrame() {
         initComponents();
+    }
+
+    public CertifierJFrame(Business business, UserAccount useraccount) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     /**

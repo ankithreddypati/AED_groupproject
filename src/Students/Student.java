@@ -11,11 +11,15 @@ package Students;
 public class Student {
     static int count=1;
     String name;
+    String country;
+    String email;
     int studentId;
 
-    public Student(String name) {
+    public Student(String name, String country, String email) {
         this.studentId= this.count;
         this.name = name;
+        this.country= country;
+        this.email = email;
         count=count+1;
     }
 
@@ -34,6 +38,23 @@ public class Student {
     public void setStudentId(int customerId) {
         this.studentId = customerId;
     }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
     
     
      @Override

@@ -4,9 +4,9 @@
  */
 package Role;
 
+import Business.Business;
 import UserAccount.UserAccount;
 import javax.swing.JFrame;
-import ProfessorAsService.Business;
 import UserAccount.UserAccount;
 
 /**
@@ -14,7 +14,7 @@ import UserAccount.UserAccount;
  * @author sruthisivasankar
  */
 public abstract class Role {
-     private static String[] roles = {"Select role","System Admin", "Professor", "Student", "Certifier"};
+     private static String[] roles = {"Professor", "Student", "Certifier","Systemadmin"};
     
     public static String[] getAllRoles() {
         return roles;

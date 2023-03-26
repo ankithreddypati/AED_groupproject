@@ -14,12 +14,11 @@ public class UserAccount {
     private String accountId;
     private String username;
     private String password;
-    private Role role;   
-    private String Country;
+    private Role role;  
     
     private static int counter = 0;
 
-    public UserAccount(String accountId, String username, String password, Role role) {
+    public UserAccount(String username, String password, Role role) {
         this.accountId = "User"+this.counter++;
         this.username = username;
         this.password = password;
@@ -58,13 +57,7 @@ public class UserAccount {
         this.role = role;
     }
 
-    public String getCountry() {
-        return Country;
-    }
-
-    public void setCountry(String Country) {
-        this.Country = Country;
-    }
+ 
     
     @Override
     public String toString(){

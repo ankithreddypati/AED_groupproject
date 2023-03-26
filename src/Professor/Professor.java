@@ -12,12 +12,17 @@ import Courses.Course;
  */
 public class Professor {
     String professorName;
-    String professorRating;
+    String country;
+    String email;
+    int professorRating;
     Course course;
 
-    public Professor(String professorName) {
+    public Professor(String professorName, String country, String email) {
         this.professorName = professorName;
+        this.country = country;
+        this.email = email;    
        // this.professorRating = professorRating;
+       
     }
 
     public String getProfessorName() {
@@ -28,11 +33,11 @@ public class Professor {
         this.professorName = professorName;
     }
 
-    public String getProfessorRating() {
+    public int getProfessorRating() {
         return professorRating;
     }
 
-    public void setProfessorRating(String professorRating) {
+    public void setProfessorRating(int professorRating) {
         this.professorRating = professorRating;
     }
 
@@ -42,6 +47,22 @@ public class Professor {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
     
     

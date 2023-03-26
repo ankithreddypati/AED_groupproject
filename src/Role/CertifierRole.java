@@ -4,9 +4,9 @@
  */
 package Role;
 
+import Business.Business;
 import UserAccount.UserAccount;
 import javax.swing.JFrame;
-import ProfessorAsService.Business;
 import UI.CertifierPanel.CertifierJFrame;
 
 /**
@@ -16,7 +16,7 @@ import UI.CertifierPanel.CertifierJFrame;
 public class CertifierRole extends Role{
      @Override
     public JFrame createWorkArea(Business business, UserAccount useraccount) {
-       return new CertifierJFrame(business, useraccount);
+        return new CertifierJFrame(business, useraccount);
     }
     
 }

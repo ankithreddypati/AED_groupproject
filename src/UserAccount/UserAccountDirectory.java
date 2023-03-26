@@ -4,6 +4,7 @@
  */
 package UserAccount;
 
+import Role.Role;
 import java.util.ArrayList;
 
 /**
@@ -23,6 +24,21 @@ public class UserAccountDirectory {
 
     public void setUseraccountlist(ArrayList<UserAccount> useraccountlist) {
         this.useraccountlist = useraccountlist;
+    }
+    
+    public UserAccount createUserAccount(String name, String password, Role role) {
+        UserAccount user = new UserAccount(name, password, role);
+        this.useraccountlist.add(user);
+        return user;
+    }
+    
+    public UserAccount authenticateUser(String name, String password) {
+        for(UserAccount ua: this.useraccountlist) {
+            if(ua.getUsername().equals(name) && ua.getPassword().equals(password)) {
+                return ua;
+            }
+        }
+        return null;
     }
     
     
