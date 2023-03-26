@@ -5,6 +5,7 @@
 package Professor;
 
 import Courses.Course;
+import Courses.CourseCatalogue;
 import java.util.ArrayList;
 
 /**
@@ -12,10 +13,14 @@ import java.util.ArrayList;
  * @author sruthisivasankar
  */
 public class ProfessorDirectory {
+    
     private ArrayList<Professor>professorlist;
+        CourseCatalogue courseCatalogue;
+
     
     public ProfessorDirectory() {
         this.professorlist = new ArrayList<Professor>();
+        this.courseCatalogue= new CourseCatalogue();
     }
 
     public ArrayList<Professor> getProfessorlist() {
@@ -24,6 +29,14 @@ public class ProfessorDirectory {
 
     public void setProfessorlist(ArrayList<Professor> professorlist) {
         this.professorlist = professorlist;
+    }
+
+    public CourseCatalogue getCourseCatalogue() {
+        return courseCatalogue;
+    }
+
+    public void setCourseCatalogue(CourseCatalogue courseCatalogue) {
+        this.courseCatalogue = courseCatalogue;
     }
     
     

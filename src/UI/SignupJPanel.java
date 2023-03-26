@@ -5,10 +5,14 @@
 package UI;
 
 import Business.Business;
+import Professor.Professor;
+import Role.CertifierRole;
 import Role.ProfessorRole;
 import Role.Role;
 import Role.StudentRole;
+import Students.Student;
 import UserAccount.UserAccount;
+import UserAccount.UserAccountDirectory;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,15 +23,29 @@ public class SignupJPanel extends javax.swing.JPanel {
     
         private Business business;
         private UserAccount useraccount;
+        public UserAccountDirectory userAccountDirectory;
+        public MainJFrame mj;
 
 
     /**
      * Creates new form SIgnupPanel
      */
-    public SignupJPanel(Business business) {
+    public SignupJPanel() {
         initComponents();
-        this.business= business;
-        populateComboBox ();
+//         this.business = Business.getInstance();
+//          this.userAccountDirectory = business.getUserAccountDirectory();
+//        populateComboBox ();
+    }
+    
+     public SignupJPanel(Business business, UserAccount useraccount){
+                initComponents();
+                this.setVisible(true);
+                this.business = business;
+                this.userAccountDirectory = business.getUserAccountDirectory();
+                populateComboBox ();
+
+
+                
     }
 
     /**
@@ -56,7 +74,6 @@ public class SignupJPanel extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         emailTxt = new javax.swing.JTextField();
         signupBtn = new javax.swing.JButton();
-        backBtn = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(0, 0, 0));
 
@@ -88,18 +105,6 @@ public class SignupJPanel extends javax.swing.JPanel {
             }
         });
 
-        backBtn.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
-        backBtn.setForeground(new java.awt.Color(255, 255, 255));
-        backBtn.setText("BACK");
-        backBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true));
-        backBtn.setContentAreaFilled(false);
-        backBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        backBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                backBtnActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -122,9 +127,7 @@ public class SignupJPanel extends javax.swing.JPanel {
                             .addComponent(usernameTxt)
                             .addComponent(PasswordTxt)
                             .addComponent(emailTxt))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32))))
+                        .addGap(32, 216, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(signupBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -134,9 +137,7 @@ public class SignupJPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rolesCBox, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(backBtn))
+                .addComponent(rolesCBox, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -161,35 +162,61 @@ public class SignupJPanel extends javax.swing.JPanel {
 
     private void signupBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupBtnActionPerformed
         // TODO add your handling code here:
+        
+        
         String username = usernameTxt.getText();
         String password = PasswordTxt.getText();
         String country = countryTxt.getText();
         String email = emailTxt.getText();
+        
+        if(username.equals("")||password.equals("")||country.equals("")||email.equals("")){
+            JOptionPane.showMessageDialog(null, "please fill all details to signup ");
+        } else {
+        
+        UserAccountDirectory ua = this.business.getUserAccountDirectory();
+        
+        if(this.business.getUserAccountDirectory().findByUserName(username)!=null ){
+            JOptionPane.showMessageDialog(null, "Sorry credentials are taken.");
+            System.out.println("i am checking if account exists ");
+        }
+        else {
 
         if (rolesCBox.getSelectedItem().equals("Student")){
-            business.getUserAccountDirectory().createUserAccount(usernameTxt.getText(), PasswordTxt.getText(), new StudentRole());
-            business.getStudentDirectory().createStudent(usernameTxt.getText(), countryTxt.getText(), emailTxt.getText());
-            JOptionPane.showMessageDialog(null, "your student profile has been created");
             
-        } else {
-            business.getUserAccountDirectory().createUserAccount(usernameTxt.getText(), PasswordTxt.getText(), new ProfessorRole());
-            business.getProfessorDirectory().createProfessor(usernameTxt.getText(),countryTxt.getText(),emailTxt.getText());
-            JOptionPane.showMessageDialog(null, "your Professor profile has been created");
-        }
+            UserAccount user = this.business.getUserAccountDirectory().createUserAccount(usernameTxt.getText(), PasswordTxt.getText(), new StudentRole());
+            Student student = this.business.getStudentDirectory().createStudent(usernameTxt.getText(), countryTxt.getText(), emailTxt.getText());
+            user.setStudent(student);
+            //this.business.getStudentDirectory().getStudentlist().add(student);
+            System.out.println("student created in : "+ student.getName());
+            JOptionPane.showMessageDialog(null, "your student profile has been created");
+            usernameTxt.setText("");
+            PasswordTxt.setText("");
+            countryTxt.setText("");
+            emailTxt.setText("");
+        } else if (rolesCBox.getSelectedItem().equals("Professor")) {
+          UserAccount user=  this.business.getUserAccountDirectory().createUserAccount(usernameTxt.getText(), PasswordTxt.getText(), new ProfessorRole());
+          Professor professor =this.business.getProfessorDirectory().createProfessor(usernameTxt.getText(),countryTxt.getText(),emailTxt.getText());
+          user.setProfessor(professor);
+          System.out.println("Professor created in : "+ professor.getProfessorName());
+
+           JOptionPane.showMessageDialog(null, "your Professor profile has been created"); 
+           usernameTxt.setText("");
+            PasswordTxt.setText("");
+            countryTxt.setText("");
+            emailTxt.setText("");
         
+        }
+        } 
+        }
         
     }//GEN-LAST:event_signupBtnActionPerformed
 
-    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
-        // TODO add your handling code here:
-         this.setVisible(false);
-        new MainJFrame(business,useraccount);
-    }//GEN-LAST:event_backBtnActionPerformed
-
+    
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField PasswordTxt;
-    private javax.swing.JButton backBtn;
     private javax.swing.JTextField countryTxt;
     private javax.swing.JTextField emailTxt;
     private javax.swing.JLabel jLabel1;

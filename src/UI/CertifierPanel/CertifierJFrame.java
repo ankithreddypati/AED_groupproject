@@ -5,7 +5,12 @@
 package UI.CertifierPanel;
 
 import Business.Business;
+import Courses.Course;
+import Students.Student;
+import UI.MainJFrame;
 import UserAccount.UserAccount;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -13,6 +18,8 @@ import UserAccount.UserAccount;
  */
 public class CertifierJFrame extends javax.swing.JFrame {
 
+    Business business;
+UserAccount useraccount;
     /**
      * Creates new form CertifierJFrame
      */
@@ -21,7 +28,11 @@ public class CertifierJFrame extends javax.swing.JFrame {
     }
 
     public CertifierJFrame(Business business, UserAccount useraccount) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+         initComponents();
+                 this.setVisible(true);
+         this.business=business;
+        this.useraccount=useraccount;
+        populateStudentsCBox();
     }
 
     /**
@@ -35,15 +46,17 @@ public class CertifierJFrame extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
+        certiTbl = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+        studentsCbox = new javax.swing.JComboBox<>();
+        ApproveBtn = new javax.swing.JButton();
+        backBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setLayout(new java.awt.BorderLayout());
+        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        certiTbl.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -51,51 +64,169 @@ public class CertifierJFrame extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Courses", "Credits", "Professor", "Approval Status"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(certiTbl);
 
-        jTextField1.setText("jTextField1");
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Students");
 
-        jLabel1.setText("Student table");
+        studentsCbox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                studentsCboxItemStateChanged(evt);
+            }
+        });
+        studentsCbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                studentsCboxActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(170, 170, 170)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(jLabel1)))
-                .addContainerGap(176, Short.MAX_VALUE))
+        ApproveBtn.setText("Approve");
+        ApproveBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ApproveBtnActionPerformed(evt);
+            }
+        });
+
+        backBtn.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        backBtn.setForeground(new java.awt.Color(255, 255, 255));
+        backBtn.setText("LOGOUT");
+        backBtn.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 2, true));
+        backBtn.setContentAreaFilled(false);
+        backBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        backBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(123, 123, 123)
+                        .addComponent(jLabel1)
+                        .addGap(73, 73, 73)
+                        .addComponent(studentsCbox, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(253, 253, 253)
+                        .addComponent(ApproveBtn)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 99, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(96, 96, 96))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(backBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45))))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(102, 102, 102)
-                .addComponent(jLabel1)
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(backBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(119, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(studentsCbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(ApproveBtn)
+                .addContainerGap(72, Short.MAX_VALUE))
         );
+
+        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    
+    private void populateStudentsCBox() {
+        
+        for (Student s: this.business.getStudentDirectory().getStudentlist()){
+            System.out.println(s.getName());
+            if (!s.getGraduateRequest().getrequestedStatus()){
+                System.out.println("requested student "+s.getName()+ " status is "+s.getGraduateRequest().getrequestedStatus());
+                studentsCbox.addItem(s.getName());
+            } 
+        }
+    }
+    
+    private void studentsCboxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_studentsCboxItemStateChanged
+        // TODO add your handling code here:
+        String studentname = (String) studentsCbox.getSelectedItem();
+        Student s = this.business.getStudentDirectory().searchStudent(studentname);
+        
+         DefaultTableModel tableModel=(DefaultTableModel)certiTbl.getModel();
+                 tableModel.setRowCount(0);
+        for (Course c : s.getTranscript().getCoursecatlogue().getCourseList()){
+             Object[] row = new Object[5];
+                  row[0]=c;
+                  row[1]=c.getCredits();
+                  row[2]=c.getProfessor().getProfessorName();
+                  if(s.getGraduateRequest().getrequestedStatus())
+                     row[3]="Graduated";
+                  else{
+                      row[3]="requested";
+                  }          
+                             
+                  
+                  
+            tableModel.addRow(row);
+        }
+        
+    }//GEN-LAST:event_studentsCboxItemStateChanged
+
+    private void ApproveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ApproveBtnActionPerformed
+        // TODO add your handling code here:
+        String studentname = (String) studentsCbox.getSelectedItem();
+        Student s = this.business.getStudentDirectory().searchStudent(studentname);
+        if(certiTbl.getRowCount()>=3){
+             s.getGraduateRequest().setrequestedStatus(true);
+        }
+         
+        DefaultTableModel tableModel=(DefaultTableModel)certiTbl.getModel();
+        tableModel.setRowCount(0);
+        for (Course c : s.getTranscript().getCoursecatlogue().getCourseList()){
+             Object[] row = new Object[5];
+                  row[0]=c;
+                  row[1]=c.getCredits();
+                  row[2]=c.getProfessor().getProfessorName();
+                  if(s.getGraduateRequest().getrequestedStatus()){
+                     row[3]="Graduated";}
+
+                  else{
+                      row[3]="requested";
+
+                  }          
+                  if(row[3]=="Graduated"){
+                                  JOptionPane.showMessageDialog(null, "Congragulations you ae graduated");}       
+                  else{
+                         JOptionPane.showMessageDialog(null, "please complete the minimum requirement of course");}       
+
+                  
+                  
+            tableModel.addRow(row);
+        }
+    }//GEN-LAST:event_ApproveBtnActionPerformed
+
+    private void backBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backBtnActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        new MainJFrame(business,useraccount);
+    }//GEN-LAST:event_backBtnActionPerformed
+
+    private void studentsCboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentsCboxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_studentsCboxActionPerformed
 
     /**
      * @param args the command line arguments
@@ -133,10 +264,14 @@ public class CertifierJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ApproveBtn;
+    private javax.swing.JButton backBtn;
+    private javax.swing.JTable certiTbl;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JComboBox<String> studentsCbox;
     // End of variables declaration//GEN-END:variables
+
+    
 }

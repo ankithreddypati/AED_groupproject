@@ -4,6 +4,8 @@
  */
 package Students;
 
+import GraduateRequest.GraduateRequest;
+
 /**
  *
  * @author sruthisivasankar
@@ -14,6 +16,9 @@ public class Student {
     String country;
     String email;
     int studentId;
+    Transcript transcript;
+    GraduateRequest graduateRequest;
+    
 
     public Student(String name, String country, String email) {
         this.studentId= this.count;
@@ -21,7 +26,10 @@ public class Student {
         this.country= country;
         this.email = email;
         count=count+1;
+        this.transcript=new Transcript();
+        this.graduateRequest=new GraduateRequest();
     }
+    
 
     public String getName() {
         return name;
@@ -53,6 +61,30 @@ public class Student {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public static int getCount() {
+        return count;
+    }
+
+    public static void setCount(int count) {
+        Student.count = count;
+    }
+
+    public Transcript getTranscript() {
+        return transcript;
+    }
+
+    public void setTranscript(Transcript transcript) {
+        this.transcript = transcript;
+    }
+
+    public GraduateRequest getGraduateRequest() {
+        return graduateRequest;
+    }
+
+    public void setGraduateRequest(GraduateRequest graduateRequest) {
+        this.graduateRequest = graduateRequest;
     }
     
     

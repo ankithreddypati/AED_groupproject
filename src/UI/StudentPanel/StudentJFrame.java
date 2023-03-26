@@ -5,7 +5,14 @@
 package UI.StudentPanel;
 
 import Business.Business;
+import Courses.Course;
+import Professor.Professor;
+import Students.Student;
+import UI.MainJFrame;
 import UserAccount.UserAccount;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -16,12 +23,24 @@ public class StudentJFrame extends javax.swing.JFrame {
     /**
      * Creates new form StudentJFrame
      */
+    private Business business;
+    private UserAccount useraccount;
+    
     public StudentJFrame(){
-        
+                populateAllCourseTbl();
+
     }
     
-    public StudentJFrame(Business business, UserAccount useraccount) {
+   
+    
+     public StudentJFrame(Business business, UserAccount useraccount) {
         initComponents();
+        this.setVisible(true);
+        this.business = business;
+        this.useraccount = useraccount;
+        populateAllCourseTbl();
+        
+        studentTxtlbl.setText(this.useraccount.getUsername());
     }
 
     /**
@@ -33,22 +52,319 @@ public class StudentJFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jSplitPane1 = new javax.swing.JSplitPane();
+        jPanel1 = new javax.swing.JPanel();
+        TranscriptBtn = new javax.swing.JButton();
+        BackBtn = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        studentTxtlbl = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        allCoursesTbl = new javax.swing.JTable();
+        EnrollBtn = new javax.swing.JButton();
+        searchbarTxt = new javax.swing.JTextField();
+        searchCBox = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        searchBtn = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        jSplitPane1.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+
+        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+
+        TranscriptBtn.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        TranscriptBtn.setText("View  Transcript");
+        TranscriptBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TranscriptBtnActionPerformed(evt);
+            }
+        });
+
+        BackBtn.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        BackBtn.setText("Logout");
+        BackBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackBtnActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Welcome");
+
+        jButton1.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jButton1.setText("Ratings");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(studentTxtlbl, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(80, 80, 80)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
+                .addComponent(TranscriptBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
+                .addComponent(BackBtn)
+                .addContainerGap(65, Short.MAX_VALUE))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TranscriptBtn)
+                    .addComponent(BackBtn)
+                    .addComponent(jLabel1)
+                    .addComponent(studentTxtlbl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
+
+        jSplitPane1.setTopComponent(jPanel1);
+
+        jPanel2.setBackground(new java.awt.Color(0, 0, 0));
+
+        allCoursesTbl.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Course Name", "Language", "Fee", "Reputation Index", "Professor Name", "Professor Rating"
+            }
+        ));
+        jScrollPane1.setViewportView(allCoursesTbl);
+
+        EnrollBtn.setText("Enroll");
+        EnrollBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EnrollBtnActionPerformed(evt);
+            }
+        });
+
+        searchCBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Professor", "Topic", "Language" }));
+
+        jLabel2.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Welcome");
+
+        jLabel3.setFont(new java.awt.Font("Helvetica Neue", 1, 13)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Search By");
+
+        searchBtn.setText("Search");
+        searchBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchBtnActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(58, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(EnrollBtn)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 776, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(64, 64, 64))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(52, 52, 52)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addComponent(searchCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(searchbarTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(searchBtn)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel2)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(searchbarTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchCBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(searchBtn))
+                .addGap(28, 28, 28)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(EnrollBtn)
+                .addContainerGap(76, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jLabel2)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+
+        jSplitPane1.setRightComponent(jPanel2);
+
+        getContentPane().add(jSplitPane1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void TranscriptBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TranscriptBtnActionPerformed
+        // TODO add your handling code here:
+       jSplitPane1.setRightComponent(new TranscriptPanel(this.business,this.useraccount));  
+    }//GEN-LAST:event_TranscriptBtnActionPerformed
+
+    private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
+        // TODO add your handling code here:
+         this.setVisible(false);
+        new MainJFrame(business,useraccount);
+    }//GEN-LAST:event_BackBtnActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        jSplitPane1.setRightComponent(new ManangeStuAccountPanel(business,useraccount)); 
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
+        // TODO add your handling code here:
+        allCoursesTbl.removeAll();
+        
+        DefaultTableModel tableModel=(DefaultTableModel)allCoursesTbl.getModel();
+        tableModel.setRowCount(0);
+        
+        if (searchCBox.getSelectedItem().equals("Professor")){
+            
+           Professor ptemp =this.business.getProfessorDirectory().searchProfessor(searchbarTxt.getText());
+           System.out.println("search successfull with "+ ptemp.getProfessorName());
+           
+           for (Course c : ptemp.getProfCourseList()){
+                  Object[] row = new Object[7];
+                  row[0]=c;
+                  row[1]=c.getLanguage();
+                  row[2]=c.getTotalCoursePrice();
+                  row[3] = c.getReputationIndex();
+                  row[4]=c.getProfessor().getProfessorName();
+                  row[5]=c.getProfessor().getProfessorRating();
+                
+                  tableModel.addRow(row);
+                
+          }
+           
+        } else if (searchCBox.getSelectedItem().equals("Topic")){
+            
+            //searching for courses topic
+           for( Course c : this.business.getCourseCatalogue().getCourseList()){
+              if(c.getName().equals(searchbarTxt.getText()))
+                    {
+                        
+                        Object[] row = new Object[7];
+                  row[0]=c;
+                  row[1]=c.getLanguage();
+                  row[2]=c.getTotalCoursePrice();
+                  row[3] = c.getReputationIndex();
+                  row[4]=c.getProfessor().getProfessorName();
+                  row[5]=c.getProfessor().getProfessorRating();
+                  tableModel.addRow(row);
+                        
+                    }
+             
+            
+           }
+            
+        } else if (searchCBox.getSelectedItem().equals("Language")){
+                        //searching for courses language
+                        
+            for( Course c : this.business.getCourseCatalogue().getCourseList()){
+              if(c.getLanguage().equals(searchbarTxt.getText()))
+                    {
+                        Object[] row = new Object[7];
+                  row[0]=c;
+                  row[1]=c.getLanguage();
+                  row[2]=c.getTotalCoursePrice();
+                  row[3] = c.getReputationIndex();
+                  row[4]=c.getProfessor().getProfessorName();
+                  row[5]=c.getProfessor().getProfessorRating();
+                  tableModel.addRow(row);
+                        
+                    }
+              
+        }
+       
+        }
+         else{
+                             JOptionPane.showMessageDialog(null, "Invalid search");
+   
+                    }
+//            
+                             
+    }//GEN-LAST:event_searchBtnActionPerformed
+
+    private void EnrollBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EnrollBtnActionPerformed
+        // TODO add your handling code here:
+        int selectedRow=allCoursesTbl.getSelectedRow();
+        
+        if(selectedRow >=0){
+            
+            String coursename = (allCoursesTbl.getValueAt(selectedRow, 0)).toString();
+            Course ctemp=this.business.getCourseCatalogue().searchcourse(coursename);
+            if(this.useraccount.getStudent().getTranscript().getCoursecatlogue().searchcourse(coursename)!=null){
+               JOptionPane.showMessageDialog(null, "course is already enrolled");
+
+            }
+            else{
+        //add course to transcript
+            this.useraccount.getStudent().getTranscript().getCoursecatlogue().getCourseList().add(ctemp);
+             JOptionPane.showMessageDialog(null, "You have enrolled in the course" );
+             System.out.println("transcript has : "+this.useraccount.getStudent().getTranscript().getCoursecatlogue().getCourseList().get(0).getName());
+     //   this.useraccount.getStudent().get().getCoursecatlog().getCourseList().add(ctemp);
+            String professorname=(allCoursesTbl.getValueAt(selectedRow, 4)).toString();
+            Professor ptemp=this.business.getProfessorDirectory().searchProfessor(professorname);
+            Student stemp=this.useraccount.getStudent();
+            ptemp.getProfStudentList().add(stemp);
+            System.out.println("professor arraylist has :"+ptemp.getProfStudentList().get(0).getName());}
+        }else{
+            JOptionPane.showMessageDialog(null, "Please select row!!!");
+        }
+    }//GEN-LAST:event_EnrollBtnActionPerformed
+
+    
+    public void populateAllCourseTbl(){
+        System.out.println("I am running course tble population in student");
+        DefaultTableModel model=(DefaultTableModel)allCoursesTbl.getModel();
+        model.setRowCount(0);
+        
+        for(Course c : this.business.getCourseCatalogue().getCourseList()){
+            Object[] row=new Object[7];
+                  row[0]=c;
+                  row[1]=c.getLanguage();
+                  row[2]=c.getTotalCoursePrice();
+                  row[3] =c.getReputationIndex();
+                  row[4]=c.getProfessor().getProfessorName();
+                  row[5]=c.getProfessor().getProfessorRating();
+            
+            model.addRow(row);
+            
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -85,5 +401,21 @@ public class StudentJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BackBtn;
+    private javax.swing.JButton EnrollBtn;
+    private javax.swing.JButton TranscriptBtn;
+    private javax.swing.JTable allCoursesTbl;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JButton searchBtn;
+    private javax.swing.JComboBox<String> searchCBox;
+    private javax.swing.JTextField searchbarTxt;
+    private javax.swing.JTextField studentTxtlbl;
     // End of variables declaration//GEN-END:variables
 }

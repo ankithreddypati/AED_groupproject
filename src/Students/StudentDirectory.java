@@ -32,5 +32,14 @@ public class StudentDirectory {
         return s;     
     }
     
+    public Student searchStudent( String s){
+     for (Student st:studentlist){
+            if(st.getName().equals(s)){
+                return st;
+            }
+        }
+        return null;
+    }
+    
     
 }

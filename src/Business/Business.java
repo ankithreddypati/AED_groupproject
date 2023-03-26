@@ -4,11 +4,15 @@
  */
 package Business;
 
+import Courses.Course;
 import Courses.CourseCatalogue;
+import GraduateRequest.GraduateRequestDirectory;
 import Professor.Professor;
 import Professor.ProfessorDirectory;
 import Role.CertifierRole;
+import Role.SystemAdminRole;
 import Students.StudentDirectory;
+import UserAccount.UserAccount;
 import UserAccount.UserAccountDirectory;
 import java.util.ArrayList;
 
@@ -21,22 +25,30 @@ public class Business {
         UserAccountDirectory userAccountDirectory;
         StudentDirectory studentDirectory;
         ProfessorDirectory professorDirectory;
+        GraduateRequestDirectory gradutaedirectory;
         
-        
-        Business (){            
+        Business (){  
             this.studentDirectory = new StudentDirectory();
             this.professorDirectory=new ProfessorDirectory();
             this.userAccountDirectory = new UserAccountDirectory();
             this.courseCatalogue = new CourseCatalogue();
-            
-            
-            this.userAccountDirectory.createUserAccount("cert", "cert", new CertifierRole());
+            this.gradutaedirectory=new GraduateRequestDirectory();
+            this.userAccountDirectory.createUserAccount("admin", "admin", new SystemAdminRole());
+            this.userAccountDirectory.createUserAccount("c", "c", new CertifierRole());
         }
 
     public UserAccountDirectory getUserAccountDirectory() {
         return userAccountDirectory;
     }
 
+    public GraduateRequestDirectory getGradutaedirectory() {
+        return gradutaedirectory;
+    }
+
+    public void setGradutaedirectory(GraduateRequestDirectory gradutaedirectory) {
+        this.gradutaedirectory = gradutaedirectory;
+    }
+    
     public void setUserAccountDirectory(UserAccountDirectory userAccountDirectory) {
         this.userAccountDirectory = userAccountDirectory;
     }
@@ -44,7 +56,10 @@ public class Business {
     public CourseCatalogue getCourseCatalogue() {
         return courseCatalogue;
     }
-
+    public Course addcourseinbusiness(Course c){
+        this.getCourseCatalogue().getCourseList().add(c);
+        return c;
+    }
     public void setCourseCatalogue(CourseCatalogue courseCatalogue) {
         this.courseCatalogue = courseCatalogue;
     }
@@ -54,6 +69,8 @@ public class Business {
         return new Business();
         
     }
+      
+      
 
     public StudentDirectory getStudentDirectory() {
         return studentDirectory;
@@ -69,6 +86,12 @@ public class Business {
 
     public void setProfessorDirectory(ProfessorDirectory professorDirectory) {
         this.professorDirectory = professorDirectory;
+    }
+    public void deleteprofessor(String name){
+        Professor ptemp=this.getProfessorDirectory().searchProfessor(name);
+      
+           this.getProfessorDirectory().getProfessorlist().remove(ptemp);
+        
     }
         
         

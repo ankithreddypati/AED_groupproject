@@ -4,7 +4,9 @@
  */
 package UserAccount;
 
+import Professor.Professor;
 import Role.Role;
+import Students.Student;
 
 /**
  *
@@ -15,6 +17,8 @@ public class UserAccount {
     private String username;
     private String password;
     private Role role;  
+    private Professor professor;
+    private Student student;
     
     private static int counter = 0;
 
@@ -37,6 +41,23 @@ public class UserAccount {
         return username;
     }
 
+    public Professor getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    
     public void setUsername(String username) {
         this.username = username;
     }
@@ -57,8 +78,7 @@ public class UserAccount {
         this.role = role;
     }
 
- 
-    
+   
     @Override
     public String toString(){
         return this.accountId;
