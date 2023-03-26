@@ -30,7 +30,8 @@ public class MainJFrame extends javax.swing.JFrame {
                 this.business = business;
                 this.useraccount = useraccount;
     }
-             
+            
+   //asdofnpasndf
 
 
     /**
