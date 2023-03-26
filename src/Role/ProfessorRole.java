@@ -17,6 +17,7 @@ public class ProfessorRole extends Role{
      @Override
     public JFrame createWorkArea(Business business, UserAccount useraccount) {
        return new ProfessorJFrame(business, useraccount);
+    
     }
     
 }
