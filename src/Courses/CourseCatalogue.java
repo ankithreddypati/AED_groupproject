@@ -11,23 +11,38 @@ import java.util.ArrayList;
  * @author sruthisivasankar
  */
 public class CourseCatalogue {
-    private ArrayList<Course>courselist;
-    
-    public CourseCatalogue() {
-        this.courselist = new ArrayList<Course>();
+    String lastupdated;
+    ArrayList<Course> courselist; 
+    public CourseCatalogue(){
+        courselist = new ArrayList();
     }
-
-    public ArrayList<Course> getCourselist() {
+    
+    public ArrayList<Course> getCourseList(){
         return courselist;
     }
-
-    public void setCourselist(ArrayList<Course> courselist) {
-        this.courselist = courselist;
-    }
     
-    public Course addCourse(){
-        Course c = new Course();
-        courselist.add(c);
-        return c;
+//    public Course newCourse(String n, String nm, int cr){
+//        Course c = new Course(n, nm, cr);
+//        courselist.add(c);
+//        return c;
+//    }
+    
+//    public Course getCourseByNumber(String n){
+//        
+//        for( Course c: courselist){
+//            
+//            if(c.getCOurseNumber().equals(n)) return c;
+//        }
+//        return null;
+//    }
+    
+    public Course searchcourse(String s){
+        for (Course c:courselist){
+            if(c.getName().equals(s)){
+                return c;
+            }
+        }
+        return null;
     }
+
 }

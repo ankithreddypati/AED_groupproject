@@ -27,4 +27,18 @@ public class ProfessorDirectory {
     }
     
     
+    public Professor createProfessor (String professorName, String country, String email){
+        Professor p = new Professor(professorName, country, email);
+        professorlist.add(p);
+        return p;
+    }
+    
+    public Professor searchProfessor(String s){
+        for (Professor p:professorlist){
+            if(p.getProfessorName().equals(s)){
+                return p;
+            }
+        }
+        return null;
+    }
 }

@@ -9,66 +9,79 @@ import Professor.Professor;
  *
  * @author sruthisivasankar
  */
-public class Course {
-    String courseName;
-    String courseSchedule;
-    String term;
-    int price;
-    Professor professor;
 
-    public Course() {
-    }
+    public class Course {
+
+    int id;
+    String name;
+    int credits;
+    String description;
+    int price = 1500; //per credit hour
     
+    //student can give this for a course 
+    int reputationIndex ;
+    int numRatings;
+    int totalReputationIndex;
 
-    public Course(String courseName, String courseSchedule, String term, int price) {
-        this.courseName = courseName;
-        this.courseSchedule = courseSchedule;
-        this.term = term;
-        this.price = price;
+    public Course(String name, int id, int credits,String description ) {
+        this.description= description;
+        this.name = name;
+        this.id = id;
+        this.credits = credits;
+        reputationIndex = 0;
+        numRatings = 0;
+        totalReputationIndex = 0;
+
     }
 
-    public String getCourseName() {
-        return courseName;
+    public int getId() {
+        return id;
     }
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getCourseSchedule() {
-        return courseSchedule;
+    public String getName() {
+        return name;
     }
 
-    public void setCourseSchedule(String courseSchedule) {
-        this.courseSchedule = courseSchedule;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getTerm() {
-        return term;
+    public String getDescription() {
+        return description;
     }
 
-    public void setTerm(String term) {
-        this.term = term;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public int getPrice() {
-        return price;
+    public int getReputationIndex() {
+        return reputationIndex;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public void setReputationIndex(int reputationIndex) {
+        totalReputationIndex += reputationIndex;
+        numRatings++;
+        this.reputationIndex = totalReputationIndex / numRatings;
     }
 
-    public Professor getProfessor() {
-        return professor;
-    }
-
-    public void setProfessor(Professor professor) {
-        this.professor = professor;
-    }
+   
     
-    
-    
-    
+    public int getCoursePrice() {
+        return price * credits;
+
+    }
+
+    public int getCredits() {
+        return credits;
     
 }
+    
+}
+    
+    
+    
+

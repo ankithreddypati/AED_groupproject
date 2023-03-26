@@ -4,18 +4,21 @@
  */
 package Role;
 
-import ProfessorAsService.Business;
+import UI.SystemAdminPanel.SystemAdminJFrame;
+import Business.Business;
+import UI.StudentPanel.StudentJFrame;
 import UserAccount.UserAccount;
 import javax.swing.JFrame;
 
 /**
  *
- * @author sruthisivasankar
+ * @author ankithreddy
  */
-public class SystemAdminRole extends Role {
+public class SystemAdminRole extends Role{
     @Override
+    
     public JFrame createWorkArea(Business business, UserAccount useraccount) {
+        
        return new SystemAdminJFrame(business, useraccount);
     }
-    
 }

@@ -4,10 +4,10 @@
  */
 package Role;
 
+import Business.Business;
 import UserAccount.UserAccount;
 import javax.swing.JFrame;
-import ProfessorAsService.Business;
-import UI.CertifierPanel.CertifierJFrame;
+import UI.ProfessorPanel.ProfessorJFrame;
 
 /**
  *
