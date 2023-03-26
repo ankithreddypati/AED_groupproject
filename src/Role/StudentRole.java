@@ -4,7 +4,8 @@
  */
 package Role;
 
-import ProfessorAsService.Business;
+import Business.Business;
+import UI.StudentPanel.StudentJFrame;
 import UserAccount.UserAccount;
 import javax.swing.JFrame;
 
@@ -14,7 +15,9 @@ import javax.swing.JFrame;
  */
 public class StudentRole extends Role{
     @Override
+    
     public JFrame createWorkArea(Business business, UserAccount useraccount) {
+        
        return new StudentJFrame(business, useraccount);
     }
     

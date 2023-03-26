@@ -26,5 +26,11 @@ public class StudentDirectory {
         this.studentlist = studentlist;
     }
     
+    public Student createStudent(String name, String country, String email){
+        Student s = new Student(name , country , email);
+        studentlist.add(s);
+        return s;     
+    }
+    
     
 }

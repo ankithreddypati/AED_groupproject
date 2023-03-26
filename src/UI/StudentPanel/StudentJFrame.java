@@ -4,6 +4,9 @@
  */
 package UI.StudentPanel;
 
+import Business.Business;
+import UserAccount.UserAccount;
+
 /**
  *
  * @author sruthisivasankar
@@ -13,7 +16,11 @@ public class StudentJFrame extends javax.swing.JFrame {
     /**
      * Creates new form StudentJFrame
      */
-    public StudentJFrame() {
+    public StudentJFrame(){
+        
+    }
+    
+    public StudentJFrame(Business business, UserAccount useraccount) {
         initComponents();
     }
 
